@@ -1,14 +1,20 @@
 public class QueueArrayBased implements QueueInterface {
-  private final int MAX_QUEUE = 50; // maximum size of queue
+  private int maxQueue = 50; // maximum size of queue
   private Object[] items;
   private int front, back, count;
   
   public QueueArrayBased() {
-    items = new Object[MAX_QUEUE];  
-    front = 0;
-    back = MAX_QUEUE-1; 
-    count = 0;
+	this(50);
+    items = new Object[maxQueue];  
+
   }  // end default constructor
+  public QueueArrayBased(int size) {
+	  maxQueue = size;
+	  items = new Object[size];  
+	  front = 0;
+	  back = size-1; 
+	  count = 0;
+  }
 
   // queue operations:
   public boolean isEmpty() {
@@ -16,12 +22,12 @@ public class QueueArrayBased implements QueueInterface {
   }  // end isEmpty
 
   public boolean isFull() {
-    return count == MAX_QUEUE;
+    return count == maxQueue;
   }  // end isFull
   
   public void enqueue(Object newItem) {
     if (!isFull()) {
-      back = (back+1) % (MAX_QUEUE);
+      back = (back+1) % (maxQueue);
       items[back] = newItem;
       ++count;
     }
@@ -35,7 +41,7 @@ public class QueueArrayBased implements QueueInterface {
     if (!isEmpty()) {
       // queue is not empty; remove front
       Object queueFront = items[front];
-      front = (front+1) % (MAX_QUEUE);
+      front = (front+1) % (maxQueue);
       --count;
       return queueFront;
     }
@@ -46,9 +52,9 @@ public class QueueArrayBased implements QueueInterface {
   }  // end dequeue
 
   public void dequeueAll() {
-    items = new Object[MAX_QUEUE];  
+    items = new Object[maxQueue];  
     front = 0;
-    back = MAX_QUEUE-1;
+    back = maxQueue-1;
     count = 0;
   }  // end dequeueAll
 
@@ -70,7 +76,7 @@ public class QueueArrayBased implements QueueInterface {
 	  else {
 		 System.out.print("Front-> ");
 		   for (int i = 0; i < count; i++) {
-			   int index = (front + i) %(MAX_QUEUE);
+			   int index = (front + i) %(maxQueue);
 			   System.out.print(items[index]);	   		   
 		   }//end of for
 		   System.out.println(" <-Back");
