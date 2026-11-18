@@ -5,7 +5,6 @@ public class QueueArrayBased implements QueueInterface {
   
   public QueueArrayBased() {
 	this(50);
-    items = new Object[maxQueue];  
 
   }  // end default constructor
   public QueueArrayBased(int size) {

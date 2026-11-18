@@ -28,8 +28,12 @@ public class MazeFrame extends JFrame{
 		}
 	}
 	public static void main(String[] args) {
-		new MazeFrame().setVisible(true);
+	new MazeFrame().setVisible(true);
+	
 		
+	
+		
+
 
 	}
 

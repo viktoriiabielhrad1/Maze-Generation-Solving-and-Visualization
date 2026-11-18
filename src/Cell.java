@@ -12,4 +12,8 @@ public class Cell {
 		left = right= top = bottom = true;
 		
 	}
+	@Override
+	public String toString() {
+		return "(" + row + ", " + col + ")";
+	}
 }

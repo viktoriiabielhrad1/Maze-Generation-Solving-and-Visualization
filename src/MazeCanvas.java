@@ -1,6 +1,7 @@
 import java.awt.*;
+import javax.swing.*;
 
-public class MazeCanvas extends Canvas{
+public class MazeCanvas extends JPanel{
 	
 	Cell[][] grid;
 	
@@ -23,7 +24,8 @@ public class MazeCanvas extends Canvas{
 	}
 	
 	@Override
-	public void paint(Graphics g) {
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);//clear the panel
 		int w = getWidth();
 		int h = getHeight();
 		
