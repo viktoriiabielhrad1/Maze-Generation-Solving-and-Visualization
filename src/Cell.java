@@ -10,5 +10,6 @@ public class Cell {
 		row = r;
 		col = c;
 		left = right= top = bottom = true;
+		
 	}
 }

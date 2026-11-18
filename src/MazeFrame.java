@@ -8,8 +8,8 @@ public class MazeFrame extends JFrame{
 		setTitle("My Perfect Maze!");
 		setSize(600,600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		initGrid();
-		//grid[0][0].right = false;
+		initGrid(); 
+		//grid[0][0].right = false; */
 		//grid[0][1].left = false;
 		//grid[5][5].bottom = false;
 		//grid[6][5].top = false;
