@@ -4,6 +4,8 @@ public class Cell {
 	int row;
 	int col;
 	public boolean left,right,top,bottom;
+	public Cell parent = null;
+	public boolean path = false;
 	
 	public Cell (int r, int c) {
 		visited = false;

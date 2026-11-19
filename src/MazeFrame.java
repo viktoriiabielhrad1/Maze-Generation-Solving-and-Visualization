@@ -13,6 +13,8 @@ public class MazeFrame extends JFrame{
 		initGrid(); 
 		genMazeRandomisedDFS();
 		resetVisitedCells();
+		bfsSolver();
+		testPathLength();
 		add(new MazeCanvas(grid));
 	}
 	
@@ -85,6 +87,65 @@ public class MazeFrame extends JFrame{
 		}
 	}
 	
+	private void bfsSolver() {
+		Cell curr = grid[0][0];
+		curr.visited = true;
+		Cell exit = grid[grid.length - 1][grid[0].length - 1];
+		QueueArrayBased queue = new QueueArrayBased(grid.length * grid[0].length);
+		queue.enqueue(curr);
+		while(!queue.isEmpty()) {
+			curr = (Cell) queue.dequeue();
+			if (curr == exit) {
+				break;
+			}
+
+					if(curr.top == false && grid[curr.row - 1][curr.col].visited == false) {
+						Cell goUp = grid[curr.row - 1][curr.col];
+						goUp.visited = true;
+						goUp.parent = curr;
+						queue.enqueue(goUp);
+						
+					}
+					if(curr.bottom == false && grid[curr.row+1][curr.col].visited == false) {
+						Cell goDown = grid[curr.row + 1][curr.col];
+						goDown.visited = true;
+						goDown.parent = curr;
+						queue.enqueue(goDown);
+					}
+					if(curr.left == false && grid[curr.row][curr.col-1].visited == false) {
+						Cell goLeft = grid[curr.row][curr.col-1];
+						goLeft.visited = true;
+						goLeft.parent = curr;
+						queue.enqueue(goLeft);
+					}
+					if(curr.right == false && grid[curr.row][curr.col+1].visited == false) {
+						Cell goRight = grid[curr.row][curr.col+1];
+						goRight.visited = true;
+						goRight.parent = curr;
+						queue.enqueue(goRight);
+					}
+		}//end of while loop
+		
+		Cell step = exit;
+		while(step != null) {
+			step.path = true;
+			step = step.parent;
+		}
+		
+	}//end of bfs solver
+	// TEMPORARY TEST - counts cells on the final path
+	private void testPathLength() {
+	    int count = 0;
+	    for (int i = 0; i < grid.length; i++) {
+	        for (int j = 0; j < grid[0].length; j++) {
+	            if (grid[i][j].path) {
+	                count++;
+	            }
+	        }
+	    }
+	    int minimum = grid.length + grid[0].length - 1;
+	    System.out.println("Path length: " + count + "  (minimum possible: " + minimum + ")");
+	}
 	private void initGrid() {
 		for (int i = 0; i< grid.length; i++) {
 			for (int j = 0; j< grid[0].length; j++) {
