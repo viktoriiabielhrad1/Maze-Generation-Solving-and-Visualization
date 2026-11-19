@@ -11,11 +11,6 @@ public class MazeFrame extends JFrame{
 		setSize(600,600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initGrid(); 
-
-		//grid[0][0].right = false; */
-		//grid[0][1].left = false;
-		//grid[5][5].bottom = false;
-		//grid[6][5].top = false;
 		add(new MazeCanvas(grid));
 	}
 	
@@ -39,6 +34,24 @@ public class MazeFrame extends JFrame{
 			list.add(grid[row][col+1]);
 		}
 		return list;
+	}
+	private void removeWall(Cell curr, Cell next) {
+		if(next.row == curr.row-1) {
+			curr.top = false;
+			next.bottom = false;
+		}
+		else if(next.row == curr.row+1) {
+			curr.bottom = false;
+			next.top = false;
+		}
+		else if(next.col == curr.col-1) {
+			curr.left = false;
+			next.right = false;
+		}
+		else if(next.col == curr.col+1) {
+			curr.right = false;
+			next.left = false;
+		}
 	}
 	
 	private void initGrid() {
