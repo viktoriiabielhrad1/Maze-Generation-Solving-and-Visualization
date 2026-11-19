@@ -12,6 +12,7 @@ public class MazeFrame extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initGrid(); 
 		genMazeRandomisedDFS();
+		resetVisitedCells();
 		add(new MazeCanvas(grid));
 	}
 	
@@ -72,6 +73,15 @@ public class MazeFrame extends JFrame{
 		else if(next.col == curr.col+1) {
 			curr.right = false;
 			next.left = false;
+		}
+	}
+	
+	private void resetVisitedCells() {
+		for (int i = 0; i< grid.length; i++) {
+			for (int j = 0; j< grid[0].length; j++) {
+				Cell c = grid[i][j];
+				c.visited = false;
+			}
 		}
 	}
 	
