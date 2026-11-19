@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 import javax.swing.*;
 
 public class MazeFrame extends JFrame{
@@ -11,11 +11,32 @@ public class MazeFrame extends JFrame{
 		setSize(600,600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initGrid(); 
+		genMazeRandomisedDFS();
 		add(new MazeCanvas(grid));
 	}
 	
 	private void genMazeRandomisedDFS() {
 		//using random dfs to tear dows correct walls to gen a perfect maze
+		Cell curr = grid[0][0];
+		curr.visited = true;
+		StackReferenceBased stack = new StackReferenceBased();
+		stack.push(curr);
+		while(!stack.isEmpty()) {
+			curr = (Cell) stack.peek();
+			ArrayList<Cell> list;
+			list = unvisitedNeighbours(curr);
+			if(list.size() >=1) {
+				int index = (int) (Math.random() * list.size());
+				Cell next = list.get(index);
+				removeWall(curr, next);
+				next.visited = true;
+				stack.push(next);
+			}
+			else {
+				stack.pop();
+			}
+			
+		}
 	}
 	private ArrayList<Cell> unvisitedNeighbours(Cell c) {
 		int row = c.row;
