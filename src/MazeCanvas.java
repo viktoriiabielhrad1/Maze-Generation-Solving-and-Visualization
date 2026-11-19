@@ -11,7 +11,17 @@ public class MazeCanvas extends JPanel{
 	
 	
 	private void drawCell(Graphics g, Cell c, int top, int left, int cell_dim) {
-
+		if (c.path == true) {
+			g.setColor(Color.GREEN);
+		}
+		else if (c.visited == true) {
+			g.setColor(Color.GRAY);
+		}
+		else {
+			g.setColor(Color.WHITE);
+		}
+		g.fillRect(left, top, cell_dim, cell_dim);
+		g.setColor(Color.BLACK);
 		if (c.top)
 			g.drawLine(left, top, left+cell_dim, top);//draw top line
 		if (c.left)
