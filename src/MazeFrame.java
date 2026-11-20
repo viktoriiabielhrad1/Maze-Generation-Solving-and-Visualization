@@ -5,19 +5,31 @@ public class MazeFrame extends JFrame{
 
 	int M = 10; int N = 10;
 	Cell [][] grid = new Cell [M][N];
+	MazeCanvas canvas;
+	private int delay = 15;
 	
+	private void pause() {
+		canvas.repaint();
+		try {
+			Thread.sleep(delay);
+		}
+		catch(InterruptedException e) {
+			//ignore
+		}
+	}
 	public MazeFrame() {
 		setTitle("My Perfect Maze!");
 		setSize(600,600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		initGrid(); 
+		canvas = new MazeCanvas(grid);
+		add(canvas);
+	}
+	public void runMaze() {
 		genMazeRandomisedDFS();
 		resetVisitedCells();
 		bfsSolver();
-		testPathLength();
-		add(new MazeCanvas(grid));
 	}
-	
 	private void genMazeRandomisedDFS() {
 		//using random dfs to tear dows correct walls to gen a perfect maze
 		Cell curr = grid[0][0];
@@ -34,9 +46,11 @@ public class MazeFrame extends JFrame{
 				removeWall(curr, next);
 				next.visited = true;
 				stack.push(next);
+				pause();
 			}
 			else {
 				stack.pop();
+				pause();
 			}
 			
 		}
@@ -83,6 +97,7 @@ public class MazeFrame extends JFrame{
 			for (int j = 0; j< grid[0].length; j++) {
 				Cell c = grid[i][j];
 				c.visited = false;
+				pause();
 			}
 		}
 	}
@@ -104,6 +119,7 @@ public class MazeFrame extends JFrame{
 						goUp.visited = true;
 						goUp.parent = curr;
 						queue.enqueue(goUp);
+						pause();
 						
 					}
 					if(curr.bottom == false && grid[curr.row+1][curr.col].visited == false) {
@@ -111,41 +127,33 @@ public class MazeFrame extends JFrame{
 						goDown.visited = true;
 						goDown.parent = curr;
 						queue.enqueue(goDown);
+						pause();
 					}
 					if(curr.left == false && grid[curr.row][curr.col-1].visited == false) {
 						Cell goLeft = grid[curr.row][curr.col-1];
 						goLeft.visited = true;
 						goLeft.parent = curr;
 						queue.enqueue(goLeft);
+						pause();
 					}
 					if(curr.right == false && grid[curr.row][curr.col+1].visited == false) {
 						Cell goRight = grid[curr.row][curr.col+1];
 						goRight.visited = true;
 						goRight.parent = curr;
 						queue.enqueue(goRight);
+						pause();
 					}
 		}//end of while loop
 		
 		Cell step = exit;
 		while(step != null) {
 			step.path = true;
+			pause();
 			step = step.parent;
 		}
 		
 	}//end of bfs solver
-	// TEMPORARY TEST - counts cells on the final path
-	private void testPathLength() {
-	    int count = 0;
-	    for (int i = 0; i < grid.length; i++) {
-	        for (int j = 0; j < grid[0].length; j++) {
-	            if (grid[i][j].path) {
-	                count++;
-	            }
-	        }
-	    }
-	    int minimum = grid.length + grid[0].length - 1;
-	    System.out.println("Path length: " + count + "  (minimum possible: " + minimum + ")");
-	}
+
 	private void initGrid() {
 		for (int i = 0; i< grid.length; i++) {
 			for (int j = 0; j< grid[0].length; j++) {
@@ -154,7 +162,9 @@ public class MazeFrame extends JFrame{
 		}
 	}
 	public static void main(String[] args) {
-	new MazeFrame().setVisible(true);
+	MazeFrame f = new MazeFrame();
+	f.setVisible(true);
+	f.runMaze();
 	
 
 	}//end of main
