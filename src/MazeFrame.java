@@ -3,8 +3,7 @@ import javax.swing.*;
 
 public class MazeFrame extends JFrame{
 
-	int M = 10; int N = 10;
-	Cell [][] grid = new Cell [M][N];
+	Cell [][] grid;
 	MazeCanvas canvas;
 	private int delay = 15;
 	
@@ -17,14 +16,15 @@ public class MazeFrame extends JFrame{
 			//ignore
 		}
 	}
-	public MazeFrame() {
+	public MazeFrame(int rows, int cols) {
 		setTitle("My Perfect Maze!");
 		setSize(600,600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		grid = new Cell[rows][cols];
 		initGrid(); 
 		canvas = new MazeCanvas(grid);
 		add(canvas);
-	}
+	}//constructor
 	public void runMaze() {
 		genMazeRandomisedDFS();
 		resetVisitedCells();
@@ -162,7 +162,7 @@ public class MazeFrame extends JFrame{
 		}
 	}
 	public static void main(String[] args) {
-	MazeFrame f = new MazeFrame();
+	MazeFrame f = new MazeFrame(10,10);
 	f.setVisible(true);
 	f.runMaze();
 	
