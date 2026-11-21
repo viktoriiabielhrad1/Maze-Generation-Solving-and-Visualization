@@ -40,12 +40,7 @@ public class MazeCanvas extends JPanel{
 		int h = getHeight();
 		
 		int cell_dim;//the size of cell in pixels when drawn on screen
-		if(w<h) {
-			cell_dim = w/grid.length;
-		}
-		else {
-			cell_dim = h/grid.length;
-		}
+		cell_dim = Math.min((w-1)/grid[0].length, (h-1)/grid.length);
 		for(int i =0; i< grid.length; i++) {//rows
 			for (int j=0; j< grid[0].length; j++){//cols
 				drawCell(g,grid[i][j], i*cell_dim, j*cell_dim, cell_dim);

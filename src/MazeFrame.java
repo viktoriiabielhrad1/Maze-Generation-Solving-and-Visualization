@@ -5,7 +5,7 @@ public class MazeFrame extends JFrame{
 
 	Cell [][] grid;
 	MazeCanvas canvas;
-	private int delay = 15;
+	private int delay = 20;
 	
 	private void pause() {
 		canvas.repaint();
@@ -17,6 +17,9 @@ public class MazeFrame extends JFrame{
 		}
 	}
 	public MazeFrame(int rows, int cols) {
+		if(rows < 1 || cols<1 || rows >100 || cols >100) {
+			throw new IllegalArgumentException("Maze size must be between 1 and 100!");
+		}
 		setTitle("My Perfect Maze!");
 		setSize(600,600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -161,10 +164,16 @@ public class MazeFrame extends JFrame{
 			}
 		}
 	}
+	
 	public static void main(String[] args) {
+		try {
 	MazeFrame f = new MazeFrame(10,10);
 	f.setVisible(true);
 	f.runMaze();
+		}
+		catch (IllegalArgumentException e) {
+			System.out.print("invalid maze size: " + e.getMessage());
+		}
 	
 
 	}//end of main
